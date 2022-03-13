@@ -1,0 +1,5 @@
+Title_page_image RCDATA "Picture\\New_title_page_image.png"
+Introduction_header RCDATA "Picture\\Introduction_header.png"
+graph_background RCDATA "Picture\\New_graph_background.png"
+Specifications_header RCDATA "Picture\\Specifications_header.png"
+Summary_statistics_header RCDATA "Picture\\Summary_statistics_header.png"
