@@ -523,7 +523,7 @@ var
         Read(lDataMatrixFile, lChar);
 
         if lChar = chr(9) then inc(tabcounter);
-        if lChar = chr(44) then inc(commacounter);
+        if lChar = ',' then inc(commacounter);
       end;
 
       Reset(lDataMatrixFile);
@@ -603,8 +603,8 @@ var
         begin
          Read(lItemInfoFile,lChar);
 
-         if lChar = chr(44) then lInputOk:= True;
-         if lChar = chr(44) then controldelim:= chr(44);
+         if lChar = ',' then lInputOk:= True;
+         if lChar = ',' then controldelim:= ',';
         end;
 
       Reset(lItemInfoFile);
@@ -713,7 +713,7 @@ var
         begin
           repeat
             Read(lDataMatrixFile, lChar);
-          until (lChar = chr(44)) or (lChar = chr(9));
+          until (lChar = ',') or (lChar = chr(9));
         end;//parse examinee ID out
 
         if frmMain.difcheckbox.IsChecked then
@@ -726,7 +726,7 @@ var
         begin
           Read(lDataMatrixFile,lChar);
 
-          if (lChar <> chr(44)) and (lChar <> chr(9)) then
+          if (lChar <> ',') and (lChar <> chr(9)) then
             inc(lNumberOfEntries);
         end;
       end;
