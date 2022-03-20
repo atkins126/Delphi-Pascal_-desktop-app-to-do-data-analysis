@@ -24,8 +24,15 @@ interface
 implementation
 
 uses
-  System.Classes, System.SysUtils, System.Types, System.Messaging,
-  FMX.Types, FMX.Controls, FMX.Layouts, FMX.Forms, FMX.VirtualKeyboard;
+  System.Classes,
+  System.SysUtils,
+  System.Types,
+  System.Messaging,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Layouts,
+  FMX.Forms,
+  FMX.VirtualKeyboard;
 
 type
   TVKStateHandler = class(TComponent)
@@ -219,7 +226,7 @@ var
         AParentBounds := AScrollBox.AbsoluteRect;
         if AParentBounds.Contains(R) then
         begin
-          AOffset := ACtrlBounds.Top - R.Top + R.Height+30;
+          AOffset := ACtrlBounds.Top - R.Top + R.Height + 30;
           if (AParentBounds.Bottom > AVKBounds.Top) or (AParentBounds.Bottom < AParentBounds.Height) then
           begin
             if (FLastControl <> AScrollBox) then
@@ -232,9 +239,10 @@ var
               FLastControl.FreeNotification(Self);
               EnableVKCheck(true);
             end;
-            AScrollBox.Margins.Bottom := AParentBounds.Bottom - AVKBounds.Top+30;
+            AScrollBox.Margins.Bottom := AParentBounds.Bottom - AVKBounds.Top + 30;
           end;
-          AScrollBox.ViewportPosition := TPointF.Create(AScrollBox.ViewportPosition.X, AScrollBox.ViewportPosition.Y + AOffset);
+          AScrollBox.ViewportPosition := TPointF.Create(AScrollBox.ViewportPosition.X,
+            AScrollBox.ViewportPosition.Y + AOffset);
           Break;
         end;
       end;

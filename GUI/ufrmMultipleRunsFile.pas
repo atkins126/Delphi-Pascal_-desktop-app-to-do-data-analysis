@@ -3,13 +3,30 @@ unit ufrmMultipleRunsFile;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
 
-  System.Rtti, System.StrUtils, vkbdhelper, FMX.DialogService,
+  System.Rtti,
+  System.StrUtils,
+  vkbdhelper,
+  FMX.DialogService,
 
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
-  FMX.Layouts, FMX.StdCtrls, FMX.Controls.Presentation, FMX.Edit, FMX.ScrollBox,
-  FMX.Memo, FMX.Memo.Types;
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.Objects,
+  FMX.Layouts,
+  FMX.StdCtrls,
+  FMX.Controls.Presentation,
+  FMX.Edit,
+  FMX.ScrollBox,
+  FMX.Memo,
+  FMX.Memo.Types;
 
 type
   TfrmMultipleRunsFile = class(TForm)
@@ -89,7 +106,7 @@ type
     property FormResult: TModalResult read FFormResult write FFormResult;
   end;
 
-  function ShowMultipleRunsFileForm(): TfrmMultipleRunsFile;
+function ShowMultipleRunsFileForm(): TfrmMultipleRunsFile;
 
 var
   frmMultipleRunsFile: TfrmMultipleRunsFile;
@@ -108,44 +125,44 @@ uses
 
 function ShowMultipleRunsFileForm(): TfrmMultipleRunsFile;
 begin
-  frmMultipleRunsFile:= TfrmMultipleRunsFile.Create(Application);
+  frmMultipleRunsFile := TfrmMultipleRunsFile.Create(Application);
 
   with frmMultipleRunsFile do
   begin
-    tbMain.StylesData['Caption.Text']:= 'Multiple Runs Creator';
+    tbMain.StylesData['Caption.Text'] := 'Multiple Runs Creator';
 
-    pathedit.StylesData['Button.Tag']:= pathedit.Tag;
-    pathedit.StylesData['Button.OnClick']:= TValue.From<TNotifyEvent>(btnPathButtonOnClick);
-    OptionEdit.StylesData['Button.Tag']:= OptionEdit.Tag;
-    OptionEdit.StylesData['Button.OnClick']:= TValue.From<TNotifyEvent>(btnPathButtonOnClick);
-    controledit.StylesData['Button.Tag']:= controledit.Tag;
-    controledit.StylesData['Button.OnClick']:= TValue.From<TNotifyEvent>(btnPathButtonOnClick);
-    dataedit.StylesData['Button.Tag']:= dataedit.Tag;
-    dataedit.StylesData['Button.OnClick']:= TValue.From<TNotifyEvent>(btnPathButtonOnClick);
+    pathedit.StylesData['Button.Tag'] := pathedit.Tag;
+    pathedit.StylesData['Button.OnClick'] := TValue.From<TNotifyEvent>(btnPathButtonOnClick);
+    OptionEdit.StylesData['Button.Tag'] := OptionEdit.Tag;
+    OptionEdit.StylesData['Button.OnClick'] := TValue.From<TNotifyEvent>(btnPathButtonOnClick);
+    controledit.StylesData['Button.Tag'] := controledit.Tag;
+    controledit.StylesData['Button.OnClick'] := TValue.From<TNotifyEvent>(btnPathButtonOnClick);
+    dataedit.StylesData['Button.Tag'] := dataedit.Tag;
+    dataedit.StylesData['Button.OnClick'] := TValue.From<TNotifyEvent>(btnPathButtonOnClick);
 
-    AddOption.Enabled:= False;
-    UseDefault.Enabled:= False;
-    AddControl.Enabled:= False;
-    SkipControl.Enabled:= False;
-    AddData.Enabled:= False;
-    btnRunMRF.Enabled:= False;
+    AddOption.Enabled := False;
+    UseDefault.Enabled := False;
+    AddControl.Enabled := False;
+    SkipControl.Enabled := False;
+    AddData.Enabled := False;
+    btnRunMRF.Enabled := False;
 
-    LineNumber:= 0;
+    LineNumber := 0;
   end;
 
-  Result:= frmMultipleRunsFile;
+  Result := frmMultipleRunsFile;
 end;
 
 procedure TfrmMultipleRunsFile.RunForm(const aSuccProc: TProc);
 begin
-  FSuccProc:= aSuccProc;
-  FormResult:= mrCancel;
+  FSuccProc := aSuccProc;
+  FormResult := mrCancel;
 
-  {$IF DEFINED(Win64) or DEFINED(Win32)}
+{$IF DEFINED(Win64) or DEFINED(Win32)}
   ShowModal;
-  {$ELSE}
+{$ELSE}
   Self.Show;
-  {$ENDIF}
+{$ENDIF}
 end;
 
 procedure TfrmMultipleRunsFile.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -153,7 +170,7 @@ begin
   if Assigned(FSuccProc) then
   begin
     FSuccProc();
-    FSuccProc:= nil;
+    FSuccProc := nil;
   end;
 end;
 
@@ -166,63 +183,63 @@ begin
       begin
         with SelectDirectoryDialog do
         begin
-          Title:= 'Select the folder where the multiple runs files are stored...';
-          FileName:= '';
+          Title := 'Select the folder where the multiple runs files are stored...';
+          FileName := '';
 
           if Execute then
           begin
-            lFileName:= ExtractFileDir(SelectDirectoryDialog.FileName);
+            lFileName := ExtractFileDir(SelectDirectoryDialog.FileName);
 
-            pathedit.Text:= IncludeTrailingPathDelimiter(lFileName + '\');
-            addpath.Enabled:= true;
+            pathedit.Text := IncludeTrailingPathDelimiter(lFileName + '\');
+            addpath.Enabled := true;
           end;
         end;
       end;
     2: // Select Options file
       begin
-        SetCurrentDir(pathedit.text);
+        SetCurrentDir(pathedit.Text);
 
         with OpenDialog do
         begin
-          InitialDir:= '.';
-          Title:= 'Select the program options file...';
-          FileName:= '';
-          Filter:= 'OPTIONS files (*.options)|*.options|TXT files (*.txt)|*.txt|All files (*.*)|*.*';
-          FilterIndex:= 1;
+          InitialDir := '.';
+          Title := 'Select the program options file...';
+          FileName := '';
+          Filter := 'OPTIONS files (*.options)|*.options|TXT files (*.txt)|*.txt|All files (*.*)|*.*';
+          FilterIndex := 1;
 
           if Execute then
-            optionedit.Text:= ExtractFileName(FileName);
+            OptionEdit.Text := ExtractFileName(FileName);
         end;
       end;
     3: // Select Item Control File
       begin
-        SetCurrentDir(pathedit.text);
+        SetCurrentDir(pathedit.Text);
 
         with OpenDialog do
         begin
-          InitialDir:= '.';
-          FileName:= '';
-          Filter:= 'TXT files (*.txt)|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
-          FilterIndex:= 1;
+          InitialDir := '.';
+          FileName := '';
+          Filter := 'TXT files (*.txt)|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
+          FilterIndex := 1;
 
           if Execute then
-            controledit.Text:= ExtractFileName(FileName);
+            controledit.Text := ExtractFileName(FileName);
         end;
       end;
     4: // Select FDATA File
       begin
-        SetCurrentDir(pathedit.text);
+        SetCurrentDir(pathedit.Text);
 
         with OpenDialog do
         begin
-          InitialDir:= '.';
-          Title:= 'Select the data file...';
-          FileName:= '';
-          Filter:= 'TXT files (*.txt|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
-          FilterIndex:= 1;
+          InitialDir := '.';
+          Title := 'Select the data file...';
+          FileName := '';
+          Filter := 'TXT files (*.txt|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
+          FilterIndex := 1;
 
           if Execute then
-            dataedit.Text:= ExtractFileName(FileName);
+            dataedit.Text := ExtractFileName(FileName);
         end;
       end;
   end;
@@ -233,67 +250,73 @@ begin
   case TButton(Sender).Tag of
     1: // btnAddPath
       begin
-        LineNumber:= Succ(LineNumber);
-        currentmrf.lines.Add('PATH' + #9 + pathedit.text);
+        LineNumber := Succ(LineNumber);
+        currentMRF.lines.Add('PATH' + #9 + pathedit.Text);
 
-        AddOption.Enabled:= True;
-        UseDefault.Enabled:= True;
+        AddOption.Enabled := true;
+        UseDefault.Enabled := true;
       end;
     2: // btnAddOptions
       begin
-        if FileExists(pathedit.text + optionedit.text) then
+        if FileExists(pathedit.Text + OptionEdit.Text) then
         begin
-          LineNumber:= Succ(LineNumber);
-          currentmrf.lines.add('OPTS' + #9 + optionedit.text);
+          LineNumber := Succ(LineNumber);
+          currentMRF.lines.Add('OPTS' + #9 + OptionEdit.Text);
 
-          AddControl.Enabled:= True;
-          SkipControl.Enabled:= True;
-        end else
-          TDialogService.ShowMessage('The specified options file does not exist' + #13 + 'Please check the Windows PATH and the File Name and try again');
+          AddControl.Enabled := true;
+          SkipControl.Enabled := true;
+        end
+        else
+          TDialogService.ShowMessage('The specified options file does not exist' + #13 +
+            'Please check the Windows PATH and the File Name and try again');
       end;
     3: // btnUseDefaults
       begin
-        LineNumber:= Succ(LineNumber);
-        currentmrf.lines.add('OPTS' + #9 + 'DEFAULTS');
+        LineNumber := Succ(LineNumber);
+        currentMRF.lines.Add('OPTS' + #9 + 'DEFAULTS');
 
-        AddControl.Enabled:= True;
-        SkipControl.Enabled:= True;
+        AddControl.Enabled := true;
+        SkipControl.Enabled := true;
       end;
     4: // AddControl
       begin
-        if FileExists(pathedit.text + controledit.text) then
+        if FileExists(pathedit.Text + controledit.Text) then
         begin
-          LineNumber:= Succ(LineNumber);
-          currentmrf.lines.add('CTRL' + #9 + controledit.text);
+          LineNumber := Succ(LineNumber);
+          currentMRF.lines.Add('CTRL' + #9 + controledit.Text);
 
-          AddData.Enabled:= True;
-        end else
-          TDialogService.ShowMessage('The specified control file does not exist' + #13 + 'Please check the Windows PATH and the File Name and try again');
+          AddData.Enabled := true;
+        end
+        else
+          TDialogService.ShowMessage('The specified control file does not exist' + #13 +
+            'Please check the Windows PATH and the File Name and try again');
       end;
     5: // SkipControl
       begin
-        LineNumber:= Succ(LineNumber);
-        currentmrf.lines.add('CTRL' + #9 + 'ITEMAN 3');
+        LineNumber := Succ(LineNumber);
+        currentMRF.lines.Add('CTRL' + #9 + 'ITEMAN 3');
 
-        AddData.Enabled:= True;
+        AddData.Enabled := true;
       end;
     6: // btnAddData
       begin
-        if FileExists(pathedit.text + dataedit.text) then
+        if FileExists(pathedit.Text + dataedit.Text) then
         begin
-          LineNumber:= Succ(LineNumber);
-          currentmrf.lines.add('DATA' + #9 + dataedit.text);
+          LineNumber := Succ(LineNumber);
+          currentMRF.lines.Add('DATA' + #9 + dataedit.Text);
 
-          btnRunMRF.Enabled:= True;
-        end else
-          TDialogService.ShowMessage('The specified data file does not exist' + #13 + 'Please check the Windows PATH and the File Name and try again');
+          btnRunMRF.Enabled := true;
+        end
+        else
+          TDialogService.ShowMessage('The specified data file does not exist' + #13 +
+            'Please check the Windows PATH and the File Name and try again');
       end;
   end;
 end;
 
 procedure TfrmMultipleRunsFile.btnBackClick(Sender: TObject);
 begin
-  FormResult:= mrCancel;
+  FormResult := mrCancel;
   Close;
 end;
 
@@ -301,20 +324,20 @@ procedure TfrmMultipleRunsFile.btnRunClick(Sender: TObject);
 begin
   with SaveDialog do
   begin
-    Title:= 'Please enter a file name for the MRF file ...';
-    InitialDir:= '.';
-    FileName:= '';
-    Filter:= 'TXT files (*.txt|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
-    FilterIndex:= 1;
+    Title := 'Please enter a file name for the MRF file ...';
+    InitialDir := '.';
+    FileName := '';
+    Filter := 'TXT files (*.txt|*.txt|DAT files (*.dat)|*.dat|All files (*.*)|*.*';
+    FilterIndex := 1;
 
     if Execute then
     begin
-      mrffile:= changefileext(FileName, '.txt');
+      MRFFile := changefileext(FileName, '.txt');
 
-      if mrffile <> '' then
+      if MRFFile <> '' then
       begin
-        currentmrf.lines.savetofile(mrffile);
-        TDialogService.ShowMessage('The MRF file ' + mrffile + ' was saved successfully.');
+        currentMRF.lines.savetofile(MRFFile);
+        TDialogService.ShowMessage('The MRF file ' + MRFFile + ' was saved successfully.');
       end;
     end;
   end;
@@ -322,78 +345,86 @@ end;
 
 procedure TfrmMultipleRunsFile.btnRunMRFClick(Sender: TObject);
 begin
-  runmrf1(pathedit.text + changefileext(dataedit.text, '') + 'MRF.txt', True);
+  RunMRF1(pathedit.Text + changefileext(dataedit.Text, '') + 'MRF.txt', true);
 end;
 
 procedure TfrmMultipleRunsFile.RunMRF1(aMRFFileName: string = ''; aSaveMRF: Boolean = False);
 var
-  i: integer;
+  i: Integer;
   lName1: string;
   lList: TStrings;
 begin
-  pathok:= false;
-  ctrlok:= false;
-  optsok:= false;
-  dataok:= false;
-  mrfok:= false;
-  mrfrun:= false;
+  PathOk := False;
+  CTRLOk := False;
+  OPTSOk := False;
+  DataOk := False;
+  MRFOk := False;
+  MRFRun := False;
 
   if aSaveMRF then
-    currentmrf.lines.savetofile(aMRFFileName);
+    currentMRF.lines.savetofile(aMRFFileName);
 
-  lList:= TStringList.Create;
+  lList := TStringList.Create;
   try
-    lList.NameValueSeparator:= #9;
+    lList.NameValueSeparator := #9;
     lList.LoadFromFile(aMRFFileName);
 
-    for i:= 0 to pred(lList.Count) do
+    for i := 0 to pred(lList.Count) do
     begin
       if lList.Names[i] = 'PATH' then
       begin
-        PATH:= lList.ValueFromIndex[i];
-        pathok:= true;
-        ctrlok:= false;
-        dataok:= false;
-      end else
-      if lList.Names[i] = 'OPTS' then
+        Path := lList.ValueFromIndex[i];
+        PathOk := true;
+        CTRLOk := False;
+        DataOk := False;
+      end
+      else if lList.Names[i] = 'OPTS' then
       begin
-        OPTS:= lList.ValueFromIndex[i];
-        optsok:= true;
-      end else
-      if lList.Names[i] = 'CTRL' then
+        OPTS := lList.ValueFromIndex[i];
+        OPTSOk := true;
+      end
+      else if lList.Names[i] = 'CTRL' then
       begin
-        CTRL:= lList.ValueFromIndex[i];
-        ctrlok:= true;
-        dataok:= false;
-      end else
-      if lList.Names[i] = 'DATA' then
+        CTRL := lList.ValueFromIndex[i];
+        CTRLOk := true;
+        DataOk := False;
+      end
+      else if lList.Names[i] = 'DATA' then
       begin
-        FDATA:= lList.ValueFromIndex[i];
-        ctrlok:= true;
-        dataok:= true;
+        FDATA := lList.ValueFromIndex[i];
+        CTRLOk := true;
+        DataOk := true;
       end;
 
-      mrfok:= pathok and optsok and ctrlok and dataok;
+      MRFOk := PathOk and OPTSOk and CTRLOk and DataOk;
 
-      if mrfok then mrfrun:= true; // if any of the mrf runs were successful, this stays TRUE unlike mrfok
+      if MRFOk then
+        MRFRun := true;
+      // if any of the mrf runs were successful, this stays TRUE unlike mrfok
 
-      if mrfok = true then
+      if MRFOk = true then
       begin
-        if OPTS <> 'DEFAULTS' then frmMain.ReadOptions(path + opts);
-        if OPTS = 'DEFAULTS' then frmMain.ReadOptions(frmMain.apppath + '\' + 'Defaults.options');
-        if CTRL = 'ITEMAN 3' then frmMain.cbDataMatrixFile.IsChecked:= true else frmMain.cbDataMatrixFile.IsChecked:= false;
+        if OPTS <> 'DEFAULTS' then
+          frmMain.ReadOptions(Path + OPTS);
+        if OPTS = 'DEFAULTS' then
+          frmMain.ReadOptions(frmMain.apppath + '\' + 'Defaults.options');
+        if CTRL = 'ITEMAN 3' then
+          frmMain.cbDataMatrixFile.IsChecked := true
+        else
+          frmMain.cbDataMatrixFile.IsChecked := False;
 
-        currentMRF.Lines.Clear;
-        currentMRF.Lines.Add('Analyzing the dataset ' + FDATA);
-        frmMain.RunIteman(PATH + FDATA, PATH + CTRL, PATH + changefileext(FDATA, '') + '.docx', path + 'MRF_Summary.txt');
+        currentMRF.lines.Clear;
+        currentMRF.lines.Add('Analyzing the dataset ' + FDATA);
+        frmMain.RunIteman(Path + FDATA, Path + CTRL, Path + changefileext(FDATA, '') + '.docx',
+          Path + 'MRF_Summary.txt');
       end;
     end;
   finally
     lList.free;
   end;
 
- lName1:= path + 'MRF_Summary.txt';
- frmMain.mrfcall(lName1, mrfrun);
+  lName1 := Path + 'MRF_Summary.txt';
+  frmMain.mrfcall(lName1, MRFRun);
 end;
 
 end.

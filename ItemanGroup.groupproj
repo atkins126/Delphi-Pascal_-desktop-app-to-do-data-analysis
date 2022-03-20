@@ -1,0 +1,62 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B6046363-D104-4B89-86DD-FE5ED9A5F43A}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Iteman.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Tests\Characterization\Iteman.Tests.Characterization.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Iteman">
+        <MSBuild Projects="Iteman.dproj"/>
+    </Target>
+    <Target Name="Iteman:Clean">
+        <MSBuild Projects="Iteman.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Iteman:Make">
+        <MSBuild Projects="Iteman.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Iteman_Tests_Characterization">
+        <MSBuild Projects="Tests\Characterization\Iteman.Tests.Characterization.dproj"/>
+    </Target>
+    <Target Name="Iteman_Tests_Characterization:Clean">
+        <MSBuild Projects="Tests\Characterization\Iteman.Tests.Characterization.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Iteman_Tests_Characterization:Make">
+        <MSBuild Projects="Tests\Characterization\Iteman.Tests.Characterization.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Iteman;Iteman_Tests_Characterization"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Iteman:Clean;Iteman_Tests_Characterization:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Iteman:Make;Iteman_Tests_Characterization:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+    <ItemGroup Condition="'$(BuildGroup)'=='All'">
+        <BuildGroupProject Include="Iteman.dproj">
+            <ProjectGuid>{4623E9E4-5C2F-49E8-AB8B-BC4CEC432536}</ProjectGuid>
+            <Configurations>Debug;Release</Configurations>
+            <Platforms>Win32</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+        <BuildGroupProject Include="Tests\Characterization\Iteman.Tests.Characterization.dproj">
+            <ProjectGuid>{633AD7EC-A19E-45E8-B5ED-05ADFA2E8CBC}</ProjectGuid>
+            <Configurations>Debug;Release</Configurations>
+            <Platforms>Win32</Platforms>
+            <Enabled>True</Enabled>
+        </BuildGroupProject>
+    </ItemGroup>
+</Project>

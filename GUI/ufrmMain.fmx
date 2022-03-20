@@ -1516,7 +1516,7 @@ object frmMain: TfrmMain
                         Size.PlatformDefault = False
                         StyleLookup = 'CheckBoxStyleNew'
                         TabOrder = 0
-                        Text = 'The data matrix file is delimated by a:'
+                        Text = 'The data matrix file is delimited by a:'
                         OnChange = DelimitBoxChange
                       end
                     end
@@ -1823,7 +1823,7 @@ object frmMain: TfrmMain
                         Size.PlatformDefault = False
                         StyleLookup = 'CheckBoxStyleNew'
                         TabOrder = 0
-                        Text = 'Response matrix includes Exeminee ID in first column'
+                        Text = 'Response matrix includes Examinee ID in first column'
                       end
                     end
                   end

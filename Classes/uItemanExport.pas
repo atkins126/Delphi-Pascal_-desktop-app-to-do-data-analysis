@@ -17,11 +17,10 @@ type
 const
   ExportLibName = 'doc_export.dll';
 
-procedure AddSpecifications(ASpecData: TBitmap; const AInputFiles, AOutputFiles : array of PWideChar;
-  const ATableSpec: TTableSpec;  AIsMultiFiles: Boolean);
+procedure AddSpecifications(ASpecData: TBitmap; const AInputFiles, AOutputFiles: array of PWideChar;
+  const ATableSpec: TTableSpec; AIsMultiFiles: Boolean);
 procedure AddHeaders(const ATitle: String; ACombobitData, ALogoData: TBitmap; AIsDemo: Boolean);
-procedure AddTable(const ATableName: String; const ATableMatrix: TTableMatrix;
-  AFirstRowIsHeader: Boolean = true);
+procedure AddTable(const ATableName: String; const ATableMatrix: TTableMatrix; AFirstRowIsHeader: Boolean = true);
 procedure AddImage(const AImageTitle: String; AImage: TBitmap);
 procedure AddSummary(ASummaryData: TBitmap);
 procedure AddItemByItemDesc(APlotsChecked, ATablesChecked: Boolean); stdcall; external ExportLibName;
@@ -33,7 +32,11 @@ procedure SaveToFile(const AFileName: PWideChar); stdcall; external ExportLibNam
 
 implementation
 
-uses SysUtils, Classes, FMX.Consts, FMX.Surfaces;
+uses
+  SysUtils,
+  Classes,
+  Fmx.Consts,
+  Fmx.Surfaces;
 
 type
   TCellSpecInt = record
@@ -46,13 +49,13 @@ type
 
 procedure AddTableInt(const ATableName: PWideChar; const ATableMatrix: TTableMatrixInt;
   AFirstRowIsHeader: Boolean = true); stdcall; external ExportLibName name 'AddTable';
-procedure AddSpecificationsInt(ASpecData: TBytes; const AInputFiles, AOutputFiles : array of PWideChar;
-  const ATableSpec: TTableSpecInt;  AIsMultiFiles: Boolean); stdcall; external ExportLibName name 'AddSpecifications';
-procedure AddImageInt(const AImageTitle: PWideChar; AImageData: TBytes); stdcall; external ExportLibName name 'AddImage';
-procedure AddHeadersInt(const ATitle: PWideChar; ACombobitData, ALogoData: TBytes;
-  AIsDemo: Boolean); stdcall; external ExportLibName name 'AddHeaders';
+procedure AddSpecificationsInt(ASpecData: TBytes; const AInputFiles, AOutputFiles: array of PWideChar;
+  const ATableSpec: TTableSpecInt; AIsMultiFiles: Boolean); stdcall; external ExportLibName name 'AddSpecifications';
+procedure AddImageInt(const AImageTitle: PWideChar; AImageData: TBytes); stdcall;
+  external ExportLibName name 'AddImage';
+procedure AddHeadersInt(const ATitle: PWideChar; ACombobitData, ALogoData: TBytes; AIsDemo: Boolean); stdcall;
+  external ExportLibName name 'AddHeaders';
 procedure AddSummaryInt(ASummaryData: TBytes); stdcall; external ExportLibName name 'AddSummary';
-
 
 function Image2Bytes(var AImage: TBitmap): TBytes;
 var
@@ -109,8 +112,8 @@ begin
   AddHeadersInt(FTitle, Image2Bytes(ACombobitData), Image2Bytes(ALogoData), AIsDemo);
 end;
 
-procedure AddSpecifications(ASpecData: TBitmap; const AInputFiles, AOutputFiles : array of PWideChar;
-  const ATableSpec: TTableSpec;  AIsMultiFiles: Boolean);
+procedure AddSpecifications(ASpecData: TBitmap; const AInputFiles, AOutputFiles: array of PWideChar;
+  const ATableSpec: TTableSpec; AIsMultiFiles: Boolean);
 var
   TableSpecInt: TTableSpecInt;
   i, j, len1, len2: Integer;
@@ -140,8 +143,7 @@ begin
   AddSpecificationsInt(Image2Bytes(ASpecData), AInputFiles, AOutputFiles, TableSpecInt, AIsMultiFiles);
 end;
 
-procedure AddTable(const ATableName: String; const ATableMatrix: TTableMatrix;
-  AFirstRowIsHeader: Boolean = true);
+procedure AddTable(const ATableName: String; const ATableMatrix: TTableMatrix; AFirstRowIsHeader: Boolean = true);
 var
   TableMatrixInt: TTableMatrixInt;
   tableName: String;

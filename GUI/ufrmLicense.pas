@@ -3,12 +3,26 @@ unit ufrmLicense;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
 
-  vkbdhelper, uProtect,
+  vkbdhelper,
+  uProtect,
 
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
-  FMX.StdCtrls, FMX.ScrollBox, FMX.Memo, FMX.Edit, FMX.Objects,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.Layouts,
+  FMX.StdCtrls,
+  FMX.ScrollBox,
+  FMX.Memo,
+  FMX.Edit,
+  FMX.Objects,
   FMX.Controls.Presentation;
 
 type
@@ -68,7 +82,7 @@ type
     property Protect: TProtect read FProtect write FProtect;
   end;
 
-  function ShowLicenseForm(): TfrmLicense;
+function ShowLicenseForm(): TfrmLicense;
 
 var
   frmLicense: TfrmLicense;
@@ -82,32 +96,32 @@ uses
 
 function ShowLicenseForm(): TfrmLicense;
 begin
-  frmLicense:= TfrmLicense.Create(Application);
+  frmLicense := TfrmLicense.Create(Application);
 
   with frmLicense do
   begin
-    tbMain.StylesData['Caption.Text']:= 'Iteman License Activation';
+    tbMain.StylesData['Caption.Text'] := 'Iteman License Activation';
 
-    tLicenseStatus.Text:= 'Demo License';
+    tLicenseStatus.Text := 'Demo License';
 
-    FProtect:= TProtect.GetProtect;
+    FProtect := TProtect.GetProtect;
     if Assigned(FProtect) then
     begin
-      tLicenseStatus.Text:= FProtect.GetLicenseStatusDes(False);
-      eMachineKey.Text:= FProtect.Key;
-      eLicenseKey.Text:= FProtect.License;
+      tLicenseStatus.Text := FProtect.GetLicenseStatusDes(False);
+      eMachineKey.Text := FProtect.Key;
+      eLicenseKey.Text := FProtect.License;
 
-      rbLicType180.IsChecked:= FProtect.LicenseType = lct30;
-      rbLicType365.IsChecked:= FProtect.LicenseType = lct365;
+      rbLicType180.IsChecked := FProtect.LicenseType = lct30;
+      rbLicType365.IsChecked := FProtect.LicenseType = lct365;
     end;
   end;
-  Result:= frmLicense;
+  Result := frmLicense;
 end;
 
 procedure TfrmLicense.RunForm(const aSuccProc: TProc);
 begin
-  FSuccProc:= aSuccProc;
-  FormResult:= mrCancel;
+  FSuccProc := aSuccProc;
+  FormResult := mrCancel;
   Show;
 end;
 
@@ -116,7 +130,7 @@ begin
   if Assigned(FSuccProc) then
   begin
     FSuccProc();
-    FSuccProc:= nil;
+    FSuccProc := nil;
   end;
 end;
 
